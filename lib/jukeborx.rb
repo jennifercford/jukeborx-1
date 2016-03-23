@@ -7,6 +7,8 @@ require "pry"
 
 require "jukeborx/version"
 require "jukeborx/song"
+require "jukeborx/user"
+#require "jukeborx/playback"
 
 db_config = YAML.load(File.open("config/database.yml"))
 ActiveRecord::Base.establish_connection(db_config)
@@ -15,7 +17,7 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 MUSIC_DIR = "/Users/brit/Music/downloads"
 
 def import(dir)
-  files = Dir.glob(File.join(dir, '*/*.mp3'))
+  files = Dir.glob(File.join(dir, '*.mp3'))
   files.each do |mp3_file|
     begin
       tag = Mp3Info.open(mp3_file) { |mp3| mp3.tag }
@@ -32,9 +34,10 @@ def import(dir)
   end
 end
 
-binding.pry
+#binding.pry
 
 module Jukeborx
+  #binding.pry
   class Api < Sinatra::Application
 
     get "/api/artists" do
@@ -75,7 +78,7 @@ module Jukeborx
       content_type :json
       { message: "You ruined the party." }.to_json
     end
-
+#binding.pry
     ### Web/HTML routes below
 
     get "/" do
