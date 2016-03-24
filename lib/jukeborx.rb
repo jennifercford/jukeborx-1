@@ -66,6 +66,7 @@ module Jukeborx
       content_type :json
       if song
         song.play
+
         { message: "Now playing '#{song.title}'" }.to_json
       else
         status 404
@@ -105,7 +106,11 @@ module Jukeborx
     post "/play" do
       song_id = params["id"]
       if song_id
+        #song.plays
         song = Song.find(song_id)
+        #play = Playback.create(song_id: song.id,
+                            #user_id: params["user_id"],
+                          #  palyed_at: DateTime.now)
         song.play if song
         redirect to("/")
       else
